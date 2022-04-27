@@ -53,13 +53,13 @@ type IEnumerableExtensions =
             .UseRouting()
             .UseEndpoints(fun endpoints ->
                 endpoints.MapHealthChecks(
-                    "/health",
+                    "/healthcheck/liveness",
                     new HealthCheckOptions(Predicate = (fun (check) -> check.Name = HealthCheckNames.ALIVE_CHECK))
                 )
                 |> ignore
 
                 endpoints.MapHealthChecks(
-                    "/ready",
+                    "/healthcheck/readiness",
                     new HealthCheckOptions(Predicate = (fun (check) -> check.Name = HealthCheckNames.READY_CHECK))
                 )
                 |> ignore
