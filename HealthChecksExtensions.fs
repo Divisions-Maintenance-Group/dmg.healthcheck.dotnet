@@ -18,7 +18,7 @@ type ReadyCheck() =
     interface IHealthCheck with
         member _.CheckHealthAsync(ctx, cancellationToken) =
             async {
-                let! ready = HealthChecks.getReadyAsync ()
+                let! ready = HealthChecks.GetReadyAsync ()
 
                 return
                     if ready then
@@ -33,7 +33,7 @@ type HealthCheck() =
     interface IHealthCheck with
         member _.CheckHealthAsync(ctx, cancellationToken) =
             async {
-                let! healthy = HealthChecks.getHealthyAsync ()
+                let! healthy = HealthChecks.GetHealthyAsync ()
 
                 return
                     if healthy then

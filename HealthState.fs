@@ -1,7 +1,7 @@
 namespace Dmg.HealthChecks
 
 module HealthState =
-    type State = { healthy: bool; ready: bool }
+    type State = { Healthy: bool; Ready: bool }
 
     type StateMessage =
         | GetState of AsyncReplyChannel<State>
@@ -9,11 +9,11 @@ module HealthState =
         | SetReady of bool
 
     type HealthStateApi =
-        { getStateAsync: unit -> Async<State>
-          getHealthyAsync: unit -> Async<bool>
-          getReadyAsync: unit -> Async<bool>
-          setHealthy: bool -> unit
-          setReady: bool -> unit }
+        { GetStateAsync: unit -> Async<State>
+          GetHealthyAsync: unit -> Async<bool>
+          GetReadyAsync: unit -> Async<bool>
+          SetHealthy: bool -> unit
+          SetReady: bool -> unit }
 
     let HealthState =
         let mailbox =
@@ -27,30 +27,30 @@ module HealthState =
                             | GetState rc ->
                                 rc.Reply state
                                 state
-                            | SetHealthy healthy -> { state with healthy = true }
-                            | SetReady ready -> { state with ready = true }
+                            | SetHealthy healthy -> { state with Healthy = true }
+                            | SetReady ready -> { state with Ready = true }
 
                         return! messageLoop state'
                     }
 
-                messageLoop { healthy = true; ready = false })
+                messageLoop { Healthy = true; Ready = false })
 
-        { getStateAsync = fun () -> mailbox.PostAndAsyncReply(fun rc -> GetState rc)
+        { GetStateAsync = fun () -> mailbox.PostAndAsyncReply(fun rc -> GetState rc)
 
-          getHealthyAsync =
+          GetHealthyAsync =
               fun () ->
                   async {
                       let! state = mailbox.PostAndAsyncReply(fun rc -> GetState rc)
-                      return state.healthy
+                      return state.Healthy
                   }
 
-          getReadyAsync =
+          GetReadyAsync =
               fun () ->
                   async {
                       let! state = mailbox.PostAndAsyncReply(fun rc -> GetState rc)
-                      return state.ready
+                      return state.Ready
                   }
 
-          setHealthy = fun healthy -> mailbox.Post(SetHealthy healthy)
+          SetHealthy = fun healthy -> mailbox.Post(SetHealthy healthy)
 
-          setReady = fun ready -> mailbox.Post(SetReady ready) }
+          SetReady = fun ready -> mailbox.Post(SetReady ready) }

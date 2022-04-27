@@ -3,10 +3,10 @@ namespace Dmg.HealthChecks
 module HealthChecks =
     open HealthState
 
-    let setReady ready = HealthState.setReady ready
+    let SetReady ready = HealthState.SetReady ready
 
-    let getReadyAsync = HealthState.getReadyAsync
+    let GetReadyAsync = HealthState.GetReadyAsync
 
-    let setHealthy healthy = HealthState.setHealthy healthy
+    let SetHealthy healthy = HealthState.SetHealthy healthy
 
-    let getHealthyAsync = HealthState.getHealthyAsync
+    let GetHealthyAsync = HealthState.GetHealthyAsync
