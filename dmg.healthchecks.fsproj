@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <PackageId>Dmg.HealthChecks</PackageId>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Company>DMG</Company>
+    <RepositoryUrl>https://github.com/divisionsinc/dmg.healthchecks.dotnet</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="HealthState.fs" />
+    <Compile Include="HealthChecks.fs" />
+    <Compile Include="HealthChecksExtensions.fs" />
+  </ItemGroup>
+
+</Project>
