@@ -9,7 +9,7 @@ open Microsoft.Extensions.DependencyInjection
 
 module HealthCheckNames =
     [<Literal>]
-    let HEALTH_CHECK = "Health_Check"
+    let ALIVE_CHECK = "Alive_Check"
 
     [<Literal>]
     let READY_CHECK = "Ready_Check"
@@ -33,13 +33,13 @@ type HealthCheck() =
     interface IHealthCheck with
         member _.CheckHealthAsync(ctx, cancellationToken) =
             async {
-                let! healthy = HealthChecks.GetHealthyAsync ()
+                let! alive = HealthChecks.GetAliveAsync ()
 
                 return
-                    if healthy then
-                        HealthCheckResult.Healthy("Service is Healthy")
+                    if alive then
+                        HealthCheckResult.Healthy("Service is Alive")
                     else
-                        HealthCheckResult.Unhealthy("Service is Unhealthy")
+                        HealthCheckResult.Unhealthy("Service is Not Alive")
             }
             |> Async.StartAsTask
 
@@ -54,7 +54,7 @@ type IEnumerableExtensions =
             .UseEndpoints(fun endpoints ->
                 endpoints.MapHealthChecks(
                     "/health",
-                    new HealthCheckOptions(Predicate = (fun (check) -> check.Name = HealthCheckNames.HEALTH_CHECK))
+                    new HealthCheckOptions(Predicate = (fun (check) -> check.Name = HealthCheckNames.ALIVE_CHECK))
                 )
                 |> ignore
 
@@ -70,7 +70,7 @@ type IEnumerableExtensions =
     static member inline AddHealthAndReadyChecks(services: IServiceCollection) =
         services
             .AddHealthChecks()
-            .AddCheck<HealthCheck>(HealthCheckNames.HEALTH_CHECK)
+            .AddCheck<HealthCheck>(HealthCheckNames.ALIVE_CHECK)
             .AddCheck<ReadyCheck>(HealthCheckNames.READY_CHECK)
         |> ignore
 

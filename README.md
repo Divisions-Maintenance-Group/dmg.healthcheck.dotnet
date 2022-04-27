@@ -1,2 +1,2 @@
 # Dmg.HealthChecks.dotnet
-HealthChecks (liveness / readiness) checks for dotnet services
+HealthChecks (alive / readiness) checks for dotnet services

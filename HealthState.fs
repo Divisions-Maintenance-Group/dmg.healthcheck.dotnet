@@ -1,18 +1,18 @@
 namespace Dmg.HealthChecks
 
 module HealthState =
-    type State = { Healthy: bool; Ready: bool }
+    type State = { Alive: bool; Ready: bool }
 
     type StateMessage =
         | GetState of AsyncReplyChannel<State>
-        | SetHealthy of bool
+        | SetAlive of bool
         | SetReady of bool
 
     type HealthStateApi =
         { GetStateAsync: unit -> Async<State>
-          GetHealthyAsync: unit -> Async<bool>
+          GetAliveAsync: unit -> Async<bool>
           GetReadyAsync: unit -> Async<bool>
-          SetHealthy: bool -> unit
+          SetAlive: bool -> unit
           SetReady: bool -> unit }
 
     let HealthState =
@@ -27,21 +27,21 @@ module HealthState =
                             | GetState rc ->
                                 rc.Reply state
                                 state
-                            | SetHealthy healthy -> { state with Healthy = true }
+                            | SetAlive alive -> { state with Alive = true }
                             | SetReady ready -> { state with Ready = true }
 
                         return! messageLoop state'
                     }
 
-                messageLoop { Healthy = true; Ready = false })
+                messageLoop { Alive = true; Ready = false })
 
         { GetStateAsync = fun () -> mailbox.PostAndAsyncReply(fun rc -> GetState rc)
 
-          GetHealthyAsync =
+          GetAliveAsync =
               fun () ->
                   async {
                       let! state = mailbox.PostAndAsyncReply(fun rc -> GetState rc)
-                      return state.Healthy
+                      return state.Alive
                   }
 
           GetReadyAsync =
@@ -51,6 +51,6 @@ module HealthState =
                       return state.Ready
                   }
 
-          SetHealthy = fun healthy -> mailbox.Post(SetHealthy healthy)
+          SetAlive = fun alive -> mailbox.Post(SetAlive alive)
 
           SetReady = fun ready -> mailbox.Post(SetReady ready) }

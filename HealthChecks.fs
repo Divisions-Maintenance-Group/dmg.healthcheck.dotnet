@@ -7,6 +7,6 @@ module HealthChecks =
 
     let GetReadyAsync = HealthState.GetReadyAsync
 
-    let SetHealthy healthy = HealthState.SetHealthy healthy
+    let SetAlive alive = HealthState.SetAlive alive
 
-    let GetHealthyAsync = HealthState.GetHealthyAsync
+    let GetAliveAsync = HealthState.GetAliveAsync
