@@ -33,3 +33,7 @@ jobs:
 
       - name: "Push NuGet package"
         run: dotnet nuget push "**/*.nupkg" --skip-duplicate --source github --api-key ${{ secrets.NUGET_API_KEY }}
+
+      - name: Cleanup
+        continue-on-error: true
+        run: dotnet nuget remove source github
