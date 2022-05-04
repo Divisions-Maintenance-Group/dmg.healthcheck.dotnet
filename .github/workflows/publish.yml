@@ -20,10 +20,13 @@ jobs:
       - name: "Setup .NET Core"
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.100'
+          dotnet-version: '6.0.x'
 
-      - name: "Build NuGet package (release)"
-        run: dotnet pack --verbosity normal --configuration Release
+      - name: "Build project"
+        run: dotnet build -verbosity detailed --configuration Release
+
+      - name: "Build NuGet package"
+        run: dotnet pack --verbosity detailed --configuration Release
 
       - name: "Push NuGet package"
         run: dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols --source $SOURCE --api-key ${{secrets.NUGET_API_KEY}}
