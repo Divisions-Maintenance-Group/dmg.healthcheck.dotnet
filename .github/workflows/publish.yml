@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: "Build project"
-        run: dotnet build -verbosity detailed --configuration Release
+        run: dotnet build --verbosity detailed --configuration Release
 
       - name: "Build NuGet package"
         run: dotnet pack --verbosity detailed --configuration Release
