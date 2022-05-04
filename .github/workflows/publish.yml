@@ -1,0 +1,29 @@
+name: Build DMG.Framework.DotNet.Grpc.Client (NuGet)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  SOURCE: https://nuget.pkg.github.com/divisionsinc/index.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Check out source"
+        uses: actions/checkout@v3
+
+      - name: "Setup .NET Core"
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: "Build NuGet package (release)"
+        run: dotnet pack --verbosity normal --configuration Release
+
+      - name: "Push NuGet package"
+        run: dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols --source $SOURCE --api-key ${{secrets.NUGET_API_KEY}}
