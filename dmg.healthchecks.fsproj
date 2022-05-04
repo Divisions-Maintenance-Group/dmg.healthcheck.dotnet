@@ -3,8 +3,10 @@
   <PropertyGroup>
     <PackageId>Dmg.HealthChecks</PackageId>
     <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Company>DMG</Company>
-    <RepositoryUrl>https://github.com/divisionsinc/dmg.healthchecks.dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/divisionsinc/dmg.healthchecks.dotnet.git</RepositoryUrl>
     <TargetFramework>net6.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
