@@ -29,4 +29,4 @@ jobs:
         run: dotnet pack --verbosity detailed --configuration Release
 
       - name: "Push NuGet package"
-        run: dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols --source $SOURCE --api-key ${{secrets.NUGET_API_KEY}}
+        run: dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols --source $SOURCE --api-key ${{ secrets.GITHUB_TOKEN }}
