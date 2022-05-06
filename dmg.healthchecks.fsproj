@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Targets" Version="3.0.0" PrivateAssets="all" />
     <Compile Include="HealthState.fs" />
     <Compile Include="HealthChecks.fs" />
     <Compile Include="HealthChecksExtensions.fs" />
