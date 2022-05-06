@@ -11,7 +11,8 @@ permissions:
   packages: write
 
 env:
-  SOURCE: https://nuget.pkg.github.com/divisionsinc/index.json
+  # SOURCE: https://nuget.pkg.github.com/divisionsinc/index.json
+  SOURCE: https://nuget.pkg.github.com/Divisions-Maintenance-Group/index.json
 
 jobs:
   build:
