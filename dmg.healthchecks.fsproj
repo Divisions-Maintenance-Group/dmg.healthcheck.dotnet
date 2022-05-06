@@ -6,7 +6,7 @@
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Company>DMG</Company>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/divisionsinc/dmg.healthchecks.dotnet.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Divisions-Maintenance-Group/dmg.healthcheck.dotnet</RepositoryUrl>
     <TargetFramework>net6.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
