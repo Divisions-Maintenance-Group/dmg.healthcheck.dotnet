@@ -18,7 +18,7 @@ type ReadyCheck() =
     interface IHealthCheck with
         member _.CheckHealthAsync(ctx, cancellationToken) =
             async {
-                let! ready = HealthChecks.GetReadyAsync ()
+                let! ready = HealthCheck.GetReadyAsync()
 
                 return
                     if ready then
@@ -29,11 +29,11 @@ type ReadyCheck() =
             |> Async.StartAsTask
 
 
-type HealthCheck() =
+type AliveCheck() =
     interface IHealthCheck with
         member _.CheckHealthAsync(ctx, cancellationToken) =
             async {
-                let! alive = HealthChecks.GetAliveAsync ()
+                let! alive = HealthCheck.GetAliveAsync()
 
                 return
                     if alive then
@@ -70,7 +70,7 @@ type IEnumerableExtensions =
     static member inline AddHealthAndReadyChecks(services: IServiceCollection) =
         services
             .AddHealthChecks()
-            .AddCheck<HealthCheck>(HealthCheckNames.ALIVE_CHECK)
+            .AddCheck<AliveCheck>(HealthCheckNames.ALIVE_CHECK)
             .AddCheck<ReadyCheck>(HealthCheckNames.READY_CHECK)
         |> ignore
 

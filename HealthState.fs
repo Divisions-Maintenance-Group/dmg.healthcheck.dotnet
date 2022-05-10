@@ -10,7 +10,9 @@ module HealthState =
 
     type HealthStateApi =
         { GetStateAsync: unit -> Async<State>
+          GetAlive: unit -> bool
           GetAliveAsync: unit -> Async<bool>
+          GetReady: unit -> bool
           GetReadyAsync: unit -> Async<bool>
           SetAlive: bool -> unit
           SetReady: bool -> unit }
@@ -27,8 +29,8 @@ module HealthState =
                             | GetState rc ->
                                 rc.Reply state
                                 state
-                            | SetAlive alive -> { state with Alive = true }
-                            | SetReady ready -> { state with Ready = true }
+                            | SetAlive alive -> { state with Alive = alive }
+                            | SetReady ready -> { state with Ready = ready }
 
                         return! messageLoop state'
                     }
@@ -37,12 +39,22 @@ module HealthState =
 
         { GetStateAsync = fun () -> mailbox.PostAndAsyncReply(fun rc -> GetState rc)
 
-          GetAliveAsync =
+          GetAlive =
               fun () ->
-                  async {
-                      let! state = mailbox.PostAndAsyncReply(fun rc -> GetState rc)
-                      return state.Alive
-                  }
+                  let state = mailbox.PostAndReply(fun rc -> GetState rc)
+                  state.Alive
+          GetAliveAsync =
+            fun () ->
+                async {
+                    let! state = mailbox.PostAndAsyncReply(fun rc -> GetState rc)
+                    return state.Alive
+                }
+
+          GetReady =
+              fun () ->
+                  let state = mailbox.PostAndReply(fun rc -> GetState rc)
+                  state.Ready
+
 
           GetReadyAsync =
               fun () ->
